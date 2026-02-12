@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You 💕</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    overflow:hidden;
+    font-family:'Fredoka', cursive;
+    background: linear-gradient(180deg,#ffd6ec,#ffb6da,#ffcde9);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* card */
+.card{
+    background:#fff7fb;
+    padding:30px;
+    border-radius:30px;
+    width:330px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* text */
+#message{
+    min-height:95px;
+    font-size:18px;
+    line-height:1.9;
+    white-space:pre-line;
+    color:#ff4fa3;
+}
+
+/* button */
+button{
+    margin-top:15px;
+    padding:10px 18px;
+    border:none;
+    border-radius:20px;
+    background:#ff69b4;
+    color:white;
+    cursor:pointer;
+}
+
+/* hearts */
+.heart{
+    position:absolute;
+    top:-20px;
+    font-size:20px;
+    animation:fall linear forwards;
+}
+@keyframes fall{
+    to{transform:translateY(110vh);opacity:0;}
+}
+
+/* ===== FINAL CAT STYLE ===== */
+#finalPage{
+    display:none;
+}
+
+.cat{
+    width:220px; /* lebih besar */
+    margin:auto;
+}
+
+/* tangan melambai */
+.arm{
+    transform-origin: 210px 190px;
+    animation:wave 0.6s infinite alternate;
+}
+@keyframes wave{
+    from{transform:rotate(0deg)}
+    to{transform:rotate(25deg)}
+}
+</style>
+</head>
+
+<body>
+
+<!-- lagu -->
+<audio autoplay loop>
+  <source src="sempurna.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+
+<!-- LOGIN -->
+<div id="login">
+    <h3>Password dulu ya 💕</h3>
+    <input type="password" id="pass">
+    <br>
+    <button onclick="checkPass()">Buka 💌</button>
+    <p id="error" style="color:red;"></p>
+</div>
+
+<!-- TEXT -->
+<div id="content" style="display:none;">
+    <p id="message"></p>
+    <button onclick="nextText()">Next ➜</button>
+</div>
+
+<!-- FINAL PAGE -->
+<div id="finalPage">
+
+<!-- KUCING FULL BODY + OUTLINE -->
+<svg class="cat" viewBox="0 0 300 320">
+
+    <!-- badan -->
+    <ellipse cx="150" cy="210" rx="85" ry="95"
+        fill="#ffffff"
+        stroke="#ff69b4"
+        stroke-width="4"/>
+
+    <!-- kepala -->
+    <circle cx="150" cy="120" r="75"
+        fill="#ffffff"
+        stroke="#ff69b4"
+        stroke-width="4"/>
+
+    <!-- telinga -->
+    <polygon points="85,80 115,25 140,85"
+        fill="#ffffff" stroke="#ff69b4" stroke-width="4"/>
+    <polygon points="215,80 185,25 160,85"
+        fill="#ffffff" stroke="#ff69b4" stroke-width="4"/>
+
+    <!-- mata -->
+    <circle cx="125" cy="120" r="10" fill="#ff69b4"/>
+    <circle cx="175" cy="120" r="10" fill="#ff69b4"/>
+
+    <!-- pipi -->
+    <circle cx="105" cy="145" r="8" fill="#ffc0da"/>
+    <circle cx="195" cy="145" r="8" fill="#ffc0da"/>
+
+    <!-- mulut -->
+    <text x="150" y="160" text-anchor="middle" font-size="24">ω</text>
+
+    <!-- tangan kiri -->
+    <circle cx="75" cy="210" r="20"
+        fill="#ffffff" stroke="#ff69b4" stroke-width="4"/>
+
+    <!-- tangan kanan melambai -->
+    <g class="arm">
+        <circle cx="225" cy="190" r="20"
+            fill="#ffffff" stroke="#ff69b4" stroke-width="4"/>
+    </g>
+
+    <!-- kaki -->
+    <ellipse cx="125" cy="285" rx="25" ry="15" fill="#fff"/>
+    <ellipse cx="175" cy="285" rx="25" ry="15" fill="#fff"/>
+
+</svg>
+
+<h2 style="color:#ff69b4;">Bye bye 👋<br>I love you 💕</h2>
+
+</div>
+</div>
+
+<script>
+const password="271025";
+
+const texts=[
+`haii cintaakuu maniss kuu, iloveyouu 💕`,
+`I hope you will always be by my side darling 💖`,
+`apaa bedanyaa kamu sama langit sore?
+enggaa ada beda nya,
+sama sama enak dipandang💕`
+];
+
+let index=0;
+
+function checkPass(){
+    if(pass.value===password){
+        login.style.display="none";
+        content.style.display="block";
+        typeText(texts[0]);
+    }else{
+        error.textContent="Password salah 😿";
+    }
+}
+
+function typeText(text){
+    let i=0;
+    message.textContent="";
+    const t=setInterval(()=>{
+        message.textContent=text.slice(0,i+1);
+        i++;
+        if(i>=text.length) clearInterval(t);
+    },30);
+}
+
+function nextText(){
+    index++;
+    if(index<texts.length){
+        typeText(texts[index]);
+    }else{
+        content.style.display="none";
+        finalPage.style.display="block";
+    }
+}
+
+/* hati jatuh */
+function createHeart(){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.textContent="💗";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(3+Math.random()*3)+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+}
+setInterval(createHeart,400);
+</script>
+
+</body>
+</html>
